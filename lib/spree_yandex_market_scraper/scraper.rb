@@ -20,7 +20,7 @@ class SpreeYandexMarketScraper::Scraper
     product_page = Nokogiri.HTML(open(link), link)
 
     title = product_page.at_css('h1.b-page-title').text
-    description = product_page.at_css('.b-model-friendly ul').text
+    description = product_page.css('.b-model-friendly ul li').map(&:text).join('; ').capitalize
 
     images = []
     %w{big small}.each do |size|
