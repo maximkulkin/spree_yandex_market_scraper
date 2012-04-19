@@ -1,23 +1,6 @@
-<%= f.field_container :yandex_market_scrape do %>
-  <%= label_tag :yandex_market_link, t('yandex_market.product_link') %><br />
-  <%= text_field_tag :yandex_market_link, nil, {:class => 'fullwidth title'} %>
-  <%= check_box_tag :yandex_market_download_images, '1', true %>
-  <%= label_tag :download_images, t('yandex_market.download_images') %><br />
-  <%= button_link_to t('yandex_market.scrape'),
-    admin_yandex_market_scrap_path(:format=>'js'),
-    :id => 'yandex_market_scrap_button' %>
-  <script>
-    $(document).ready(function() {
-      $('#yandex_market_scrap_button').on('click', function(event) {
-        event.preventDefault()
-
-        $.ajax({url: $(this).attr('href'), data: {
-          product_id: <%= @product.id %>,
-          market_link: $('#yandex_market_link').val(),
-          download_images: $('#yandex_market_download_images:checked').val()
-        }})
-      })
-    })
-  </script>
+<%= t(:or) %>
+<%= f.field_container :yandex_market_link do %>
+  <%= label_tag :yandex_market_link, t('yandex_market.product_link') %> <br />
+  <%= text_field_tag :yandex_market_link, params[:yandex_market_link], {:class => 'fullwidth title'} %>
 <% end %>
 

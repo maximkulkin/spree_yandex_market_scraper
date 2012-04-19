@@ -6,4 +6,7 @@ en:
     product_link: Product page on Yandex.Market
     download_images: Download images from Yandex.Market
     scrape: Get description
+    error:
+      load: Can't load product page from Yandex.Market
+      parse: Can't extract data from Yandex.Market's product page
 
