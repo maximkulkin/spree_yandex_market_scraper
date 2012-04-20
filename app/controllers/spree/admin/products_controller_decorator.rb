@@ -16,7 +16,10 @@ Spree::Admin::ProductsController.class_eval do
       end
 
       Array(scraped_data[:properties]).each do |property|
-
+        full_name = property[:group] ? "#{property[:group]} / #{property[:name]}" : property[:name]
+        Spree::Property.find_by_name(full_name) ||
+          Spree::Property.create(:name => full_name, :presentation => property[:name])
+        @product.product_properties.build(:property_name => full_name, :value => property[:value])
       end
     rescue OpenURI::HTTPError => e
       logger.error e
