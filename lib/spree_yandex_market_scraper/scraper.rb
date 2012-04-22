@@ -6,18 +6,13 @@ class SpreeYandexMarketScraper::Scraper
   MARKET_BASE_URL = "http://market.yandex.ru"
   META_SUFFIX = '. Все характеристики, сравнение цен, отзывы покупателей на Яндекс.Маркете.'
 
-  def self.scrap(modelid)
-    if %r{^http://} =~ modelid
-      given_uri = URI.parse(modelid)
-      given_uri_params = given_uri.query.split('&').each_with_object({}) do |s, params|
-        k, v = s.split('=', 2)
-        params[k] = v
-      end
+  def self.scrap(product_url)
+    raise "Not an url: '#{product_url}'" if %r{^http://} !~ product_url
 
-      modelid = given_uri_params['modelid']
-    end
+    product_uri = URI.parse(product_url)
+    query = product_uri.query
 
-    info_page_link = MARKET_BASE_URL + "/model.xml?modelid=#{modelid}"
+    info_page_link = MARKET_BASE_URL + "/model.xml?#{query}"
     info_page = Nokogiri.HTML(open(info_page_link), info_page_link)
 
     title = info_page.at_css('h1.b-page-title').text
@@ -32,8 +27,12 @@ class SpreeYandexMarketScraper::Scraper
       end
     end
 
+    info_page.css('.b-model-pictures img').each do |e|
+      image_link = e.attr('src')
+      images << image_link if image_link
+    end
 
-    properties_page_link = MARKET_BASE_URL + "/model-spec.xml?modelid=#{modelid}"
+    properties_page_link = MARKET_BASE_URL + "/model-spec.xml?#{query}"
     properties_page = Nokogiri.HTML(open(properties_page_link), properties_page_link)
 
     current_property_group = ''
