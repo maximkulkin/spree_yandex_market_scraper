@@ -1,0 +1,18 @@
+<%= render :partial => 'spree/admin/shared/product_sub_menu' %>
+
+<%= render :partial => 'spree/admin/shared/product_tabs', :locals => { :current => 'YandexMarketInfo' } %>
+
+<%= render :partial => 'spree/shared/error_messages', :locals => { :target => @product } %>
+
+
+<%= form_for @product, :url => admin_product_yandex_market_info_url(@product) do |f| %>
+  <%= f.field_container :yandex_market_link do %>
+    <%= label_tag :yandex_market_link, t('yandex_market.product_link') %> <span class="required">*</span><br />
+    <%= text_field_tag :yandex_market_link, params[:yandex_market_link], {:class => 'fullwidth title'} %>
+  <% end %>
+
+  <p class="form-buttons">
+    <%= button t('yandex_market.scrape') %>
+  </p>
+<% end %>
+

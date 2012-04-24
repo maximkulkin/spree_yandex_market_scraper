@@ -1,12 +1,11 @@
-# Sample localization file for English. Add more files in this directory for other locales.
-# See https://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
 
 en:
   yandex_market:
+    market: Yandex.Market
     product_link: Product page on Yandex.Market
-    download_images: Download images from Yandex.Market
-    scrape: Get description
+    scrape: Download information
     error:
+      uri: Invalid product page link
       load: Can't load product page from Yandex.Market
       parse: Can't extract data from Yandex.Market's product page
 

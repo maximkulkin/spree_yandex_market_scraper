@@ -1,6 +1,8 @@
 Spree::Core::Engine.routes.draw do
-  # Add your extension routes here
   namespace :admin do
-    match '/yandex_market_scrap' => 'yandex_market_scrap#new', :as => 'yandex_market_scrap'
+    resources :products do
+      resource :yandex_market_info, :only => [:edit, :update],
+        :controller => 'yandex_market_info'
+    end
   end
 end

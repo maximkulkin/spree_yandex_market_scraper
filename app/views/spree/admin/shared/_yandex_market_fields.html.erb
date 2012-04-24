@@ -1,6 +1,6 @@
 <%= t(:or) %>
 <%= f.field_container :yandex_market_link do %>
-  <%= label_tag :yandex_market_link, t('yandex_market.product_link') %> <br />
+  <%= label_tag :yandex_market_link, t('yandex_market.product_link') %> <span class="required">*</span><br />
   <%= text_field_tag :yandex_market_link, params[:yandex_market_link], {:class => 'fullwidth title'} %>
 <% end %>
 
