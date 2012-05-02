@@ -15,9 +15,9 @@ class SpreeYandexMarketScraper::Scraper
     info_page_url = MARKET_BASE_URL + "/model.xml?#{query}"
     info_page = Nokogiri.HTML(open(info_page_url), info_page_url)
 
-    title = info_page.at_css('h1.b-page-title').text
+    title = info_page.at_css('h1.b-page-title').text rescue nil
     description = info_page.css('.b-model-friendly ul li').map(&:text).join('; ').capitalize
-    meta_description = info_page.at_xpath('//meta[@name="Description"]/@content').text.sub(META_SUFFIX, '')
+    meta_description = info_page.at_xpath('//meta[@name="Description"]/@content').text.sub(META_SUFFIX, '') rescue nil
 
     images = []
     %w{big small}.each do |size|
@@ -47,8 +47,11 @@ class SpreeYandexMarketScraper::Scraper
       if property_group_title = row.at_css('th.b-properties__title')
         current_property_group = property_group_title.text
       else
-        property_name = row.at_css('th.b-properties__label').text
-        property_value = row.at_css('td.b-properties__value').text
+        property_name = row.at_css('th.b-properties__label').text rescue nil
+        property_value = row.at_css('td.b-properties__value').text rescue nil
+
+        next unless property_name
+
         properties << { :group => current_property_group, :name => property_name, :value => property_value }
       end
     end
