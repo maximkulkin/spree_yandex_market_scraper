@@ -4,15 +4,55 @@
 
 <%= render :partial => 'spree/shared/error_messages', :locals => { :target => @product } %>
 
+<div class="yandex_market">
 
-<%= form_for @product, :url => admin_product_yandex_market_info_url(@product) do |f| %>
-  <%= f.field_container :yandex_market_link do %>
-    <%= label_tag :yandex_market_link, t('yandex_market.product_link') %> <span class="required">*</span><br />
-    <%= text_field_tag :yandex_market_link, params[:yandex_market_link], {:class => 'fullwidth title'} %>
+  <div class="logo">
+    <%= image_tag 'yandex_logo.png', :alt => t('yandex') %>
+    <%= t('market') %>
+  </div>
+
+  <div class="search">
+    <%= form_tag edit_admin_product_yandex_market_info_url(@product), :method => :get do %>
+      <%= text_field_tag :product_name, @search_text %>
+      <%= button t('yandex_market.search') %>
+    <% end %>
+  </div>
+
+  <div class="offers">
+    <% for offer in @offers %>
+      <div class="offer">
+        <div class="form-buttons">
+          <%= form_for @product, :url => admin_product_yandex_market_info_url(@product) do |f| %>
+            <%= hidden_field_tag :yandex_market_link, offer[:url] %>
+            <%= button t('yandex_market.select') %>
+          <% end %>
+        </div>
+        <div class="image">
+          <%= image_tag offer[:image] || 'default_product' %>
+        </div>
+        <h3><%= link_to offer[:title], offer[:url], :target => '_blank' %></h3>
+        <p class="description">
+          <%= offer[:description] %>
+        </p>
+      </div>
+    <% end %>
+    <% if @offers.empty? %>
+      <div class="empty">
+        <%= t('yandex_market.no_results') %>
+      </div>
+    <% end %>
+  </div>
+
+  <%= form_for @product, :url => admin_product_yandex_market_info_url(@product) do |f| %>
+    <%= f.field_container :yandex_market_link do %>
+      <%= label_tag :yandex_market_link, t('yandex_market.product_link') %> <span class="required">*</span><br />
+      <%= text_field_tag :yandex_market_link, params[:yandex_market_link], {:class => 'fullwidth'} %>
+    <% end %>
+
+    <p class="form-buttons">
+      <%= button t('yandex_market.scrape') %>
+    </p>
   <% end %>
 
-  <p class="form-buttons">
-    <%= button t('yandex_market.scrape') %>
-  </p>
-<% end %>
+</div>
 

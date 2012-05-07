@@ -2,7 +2,8 @@ class Spree::Admin::YandexMarketInfoController < Spree::Admin::BaseController
   before_filter :load_data
 
   def edit
-    render
+    @search_text = params[:product_name] || @product.name
+    @offers = SpreeYandexMarketScraper::Scraper.search(@search_text, :limit => 5)
   end
 
   def update

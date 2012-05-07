@@ -1,9 +1,14 @@
 
 en:
+  yandex: Yandex
+  market: Market
   yandex_market:
     market: Yandex.Market
     product_link: Product page on Yandex.Market
     scrape: Download information
+    search: Search
+    no_results: Nothing was found
+    select: Select
     error:
       uri: Invalid product page link
       load: Can't load product page from Yandex.Market

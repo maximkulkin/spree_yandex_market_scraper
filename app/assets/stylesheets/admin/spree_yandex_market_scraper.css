@@ -5,3 +5,56 @@
   margin-bottom: 1em;
 }
 
+
+.yandex_market .logo {
+  float: left;
+  color: #FF8B00;
+  font-weight: bold;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.yandex_market .logo img {
+  display: block;
+}
+
+
+.yandex_market .search {
+  margin-left: 110px;
+  padding: 0.5em 1em;
+  background-color: #58b;
+}
+
+.yandex_market .search input {
+  font-size: 16px;
+  margin-right: 0.5em;
+  width: 70%;
+}
+
+
+.yandex_market .offer {
+  clear: both;
+  margin-top: 1em;
+}
+
+.yandex_market .offer .image {
+  float: left;
+  width: 100px;
+  height: 100px;
+  margin: 0.5em;
+  text-align: center;
+  vertical-align: center;
+}
+
+.yandex_market .offer .form-buttons {
+  float: right;
+}
+
+
+.yandex_market .empty {
+  margin: 2em 0;
+  text-align: center;
+  line-height: 1.3em;
+  font-size: 1.3em;
+}
+

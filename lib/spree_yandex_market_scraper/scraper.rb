@@ -128,5 +128,42 @@ class SpreeYandexMarketScraper::Scraper
       false
     end
   end
+
+
+  def self.search(text, options = {})
+    limit = options[:limit]
+
+    search_url = "#{MARKET_BASE_URL}/search.xml?text=#{URI.escape(text)}"
+    search_page = Nokogiri.HTML(open(search_url), search_url)
+
+    base_uri = URI.parse(search_url)
+    
+    offers = []
+    search_page.css('.b-offers').each do |offer_elem|
+      break if limit && offers.size >= limit
+
+      begin
+        url = URI.parse(offer_elem.at_css('h3.b-offers__title a.b-offers__name').attr('href'))
+        next unless url.path == '/model.xml'
+
+        url = base_uri.merge(url).to_s
+
+        title = offer_elem.at_css('h3.b-offers__title a.b-offers__name').text
+
+        image_url = offer_elem.at_css('img.b-offers__img').attr('src') rescue nil
+        description = offer_elem.css('p.b-offers__spec').collect(&:text).compact.join("\n")
+        offers << {
+          :url => url,
+          :title => title,
+          :description => description,
+          :image => image_url
+        }
+      rescue
+        Rails.logger.error "\e[1;31mError: couldn't parse search result, #{e}\e[0m"
+      end
+    end
+
+    offers
+  end
 end
 
