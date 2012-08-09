@@ -12,6 +12,7 @@ class Spree::Admin::YandexMarketInfoController < Spree::Admin::BaseController
       flash.notice = flash_message_for(@product, :successfully_updated)
       redirect_to edit_admin_product_url(@product)
     else
+      edit
       render :action => 'edit'
     end
   end
