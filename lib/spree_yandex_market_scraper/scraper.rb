@@ -84,10 +84,8 @@ class SpreeYandexMarketScraper::Scraper
     image_links.each do |image_link|
       image_data = open(image_link)
 
-      image_attributes = { :attachment => image_data }
-      image_attributes[:origin] = image_link if has_origin
-
-      product.images.build(image_attributes)
+      image = product.images.build(:attachment => image_data)
+      image.origin = image_link if has_origin
     end
 
     Array(scraped_data[:properties]).group_by { |d| d[:group] }.each do |group_name, properties|
